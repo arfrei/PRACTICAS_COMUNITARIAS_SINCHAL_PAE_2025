@@ -26,3 +26,5 @@ En este repositario iré subiendo ciertos códigos para las distintas soluciones
 ![THINGSPEAK SINCHAL NIVEL](https://github.com/user-attachments/assets/0b18c6d7-af1d-4256-92ac-64b2604af9dc)
 ![SERVIDOR FLASK SINCHAL](https://github.com/user-attachments/assets/333e7dd2-7270-44f1-8bef-fbd0ddbb0d47)
 ![BASE DE DATOS SINCHAL](https://github.com/user-attachments/assets/7d74d9d8-dfd4-4369-b03e-20e6ae54e61e)
+
+2: Comunicación LoRa, MySQL y Grafana
