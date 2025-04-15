@@ -19,7 +19,7 @@ optimizando el uso del agua y asegurando su disponibilidad continua para la comu
 # SOLUCIONES
 En este repositario iré subiendo ciertos códigos para las distintas soluciones.
 
-1: Comunicación LoRa, ThingSpeak y Comunicación Flask-SQL Server
+1: Comunicación LoRa, ThingSpeak y Comunicación Servidor Flask-SQL Server
 
 ![TRANSMISOR SINCHAL](https://github.com/user-attachments/assets/7dcb656f-8584-4494-b649-321fc42216ef)
 ![RECEPTOR SINCHAL](https://github.com/user-attachments/assets/cb6b00aa-6bd9-474f-b10c-0e6ba387c183)
