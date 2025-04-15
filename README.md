@@ -18,4 +18,5 @@ optimizando el uso del agua y asegurando su disponibilidad continua para la comu
 
 # SOLUCIONES
 En este repositario iré subiendo ciertos códigos para las distintas soluciones.
+
 1: Comunicación LoRa, ThingSpeak y Comunicación Flask-SQL Server
