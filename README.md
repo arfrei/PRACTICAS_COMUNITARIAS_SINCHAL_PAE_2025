@@ -1,5 +1,5 @@
 # PRACTICAS_COMUNITARIAS_SINCHAL_PAE_2025
-En este repositario adjuntaré todos los códigos utilizados en el proyecto de prácticas comunitarias.
+En este repositario se adjuntan todos los códigos utilizados en el proyecto de prácticas comunitarias.
 
 # INTRODUCCION 
 La Junta Administrativa de Agua Potable Regional de Valdivia (JAAPRV) en Sinchal abastece a 
