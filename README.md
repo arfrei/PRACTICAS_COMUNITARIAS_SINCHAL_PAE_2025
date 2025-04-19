@@ -32,4 +32,6 @@ Se añadió el sensor de presión de la junta de agua al Dashboard:
 ![SENSOR PRESION](https://github.com/user-attachments/assets/6f618200-97e0-4494-a8c8-264e025d929d)
 ![DASHBOARD THINGSPEAK](https://github.com/user-attachments/assets/66219a46-8c75-408c-b532-3f2d4171e95a)
 
-2: Comunicación LoRa, MySQL y Grafana
+2: Adaptar los códigos del sensor de nivel a un filtro estadístico (IQR+Media)
+
+3: Comunicación LoRa, MySQL y Grafana
