@@ -27,4 +27,8 @@ En este repositario iré subiendo ciertos códigos para las distintas soluciones
 ![SERVIDOR FLASK SINCHAL](https://github.com/user-attachments/assets/333e7dd2-7270-44f1-8bef-fbd0ddbb0d47)
 ![BASE DE DATOS SINCHAL](https://github.com/user-attachments/assets/7d74d9d8-dfd4-4369-b03e-20e6ae54e61e)
 
+Se añadió el sensor de presión de la junta de agua al Dashboard:
+![SENSOR PRESION](https://github.com/user-attachments/assets/6f618200-97e0-4494-a8c8-264e025d929d)
+![DASHBOARD THINGSPEAK](https://github.com/user-attachments/assets/66219a46-8c75-408c-b532-3f2d4171e95a)
+
 2: Comunicación LoRa, MySQL y Grafana
