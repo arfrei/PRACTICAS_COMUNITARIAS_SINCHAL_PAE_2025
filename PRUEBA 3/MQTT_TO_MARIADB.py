@@ -10,35 +10,45 @@ db_config = {
     "database": "sensores"
 }
 
-# Función para insertar en la base de datos
-def insertar_dato(valor):
+# Función para insertar según el tipo de sensor
+def insertar_dato(tipo, valor):
     try:
         conn = mysql.connector.connect(**db_config)
         cursor = conn.cursor()
-        sql = "INSERT INTO datos (timestamp, nivel, presion) VALUES (NOW(), %s, %s)"
-        cursor.execute(sql, (valor, None))  # presion queda como NULL
+
+        if tipo == "nivel":
+            sql = "INSERT INTO datos (timestamp, nivel, presion) VALUES (NOW(), %s, %s)"
+            cursor.execute(sql, (valor, None))
+        elif tipo == "presion":
+            sql = "INSERT INTO datos (timestamp, nivel, presion) VALUES (NOW(), %s, %s)"
+            cursor.execute(sql, (None, valor))
+
         conn.commit()
         cursor.close()
         conn.close()
-        print(f"[{datetime.now()}] Insertado valor: {valor}")
+        print(f"[{datetime.now()}] Insertado {tipo}: {valor}")
     except Exception as e:
         print(f"Error al insertar en la base de datos: {e}")
 
-# Callback cuando se recibe un mensaje
+# Callback al recibir mensaje
 def on_message(client, userdata, msg):
     try:
         payload = msg.payload.decode()
         valor = float(payload)
-        insertar_dato(valor)
+        if msg.topic == "nivel":
+            insertar_dato("nivel", valor)
+        elif msg.topic == "presion":
+            insertar_dato("presion", valor)
     except ValueError:
-        print(f"Dato recibido no es válido: {msg.payload}")
+        print(f"Valor no válido recibido: {msg.payload}")
 
 # Configurar cliente MQTT
 client = mqtt.Client()
 client.on_message = on_message
 
 client.connect("localhost", 1883, 60)
-client.subscribe("sensor/altura")
+client.subscribe("nivel")
+client.subscribe("presion")
 
-print("Esperando mensajes MQTT en 'sensor/altura'...")
+print("Escuchando topics: nivel y presion...")
 client.loop_forever()
