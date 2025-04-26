@@ -1,1 +1,33 @@
-Para esta integracion se realiza el siguiente flujo
+En esta integracion final se ha diseñado un servidor en una Raspberry Pi 3 que realiza lo siguiente:
+
+--BROKER MQTT MOSQUITTO--
+1) Genera un Broker MQTT en Mosquitto con una ip fija.
+2) Recibe datos por MQTT en dos topics (nivel y presion).
+3) Existe un servicio en systemd que habilita el broker de manera automatica
+
+--BASE DE DATOS MARIADB--
+1) Tiene un sistema de base de datos
+2) Se ha creado una base de datos "sensores" donde se almacena nivel y presion con la hora exacta de envio
+3) Hay usuarios y contraseñas que se podrian utilizar a futuro por seguridad
+4) Existe un servicio en systemd que habilita la base de datos de manera automatica
+
+--INTEGRACION MQTT Y BASE DE DATOS--
+1) Mediante un script en python se insertan los datos de MQTT a la base de datos de forma ordenada
+2) Existe un servicio en systemd que habilita esta integracion de manera automatica
+
+--LIMPIEZA AUTOMATICA DE BASE DE DATOS--
+1) Mediante un cron job se limpia por completo la base de datos en un plazo de 30 dias (puede modificarse)
+2) Esto se realiza de manera automatica
+
+--GRAFANA SERVER--
+1) Se ha creado un servidor en grafana de manera local
+2) Se ha enlazado este servidor con la base de datos local en mariadb
+3) Se ha creado un dashboard para nivel y presion (puede modificarse para mejor presentacion)
+4) Existe un servicio en systemd que habilita esto de manera automatica
+
+--NGROK SERVER--
+1) Se ha creado una cuenta en ngrok, con lo cual se tiene un broker y un acceso (el broker mantener fijo, sino hay que modificar la raspberry)
+2) Se ha configurado ngrok en la raspberry
+
+
+
