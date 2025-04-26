@@ -16,8 +16,8 @@ En esta integracion final se ha diseñado un servidor en una Raspberry Pi 3 que 
 2) Existe un servicio en systemd que habilita esta integracion de manera automatica
 
 --LIMPIEZA AUTOMATICA DE BASE DE DATOS--
-1) Mediante un cron job se limpia por completo la base de datos en un plazo de 30 dias (puede modificarse)
-2) Esto se realiza de manera automatica
+1) Mediante un cron job (y su archivo de conf) se limpia por completo la base de datos en un plazo de 30 dias (puede modificarse)
+NOTA: Esto se realiza de manera automatica
 
 --GRAFANA SERVER--
 1) Se ha creado un servidor en grafana de manera local
@@ -28,6 +28,26 @@ En esta integracion final se ha diseñado un servidor en una Raspberry Pi 3 que 
 --NGROK SERVER--
 1) Se ha creado una cuenta en ngrok, con lo cual se tiene un broker y un acceso (el broker mantener fijo, sino hay que modificar la raspberry)
 2) Se ha configurado ngrok en la raspberry
+3) Se ha enlazado ngrok al servidor de grafana local (mediante el puerto http 3000)
+4) Existe un servicio en systemd que habilita el servidor ngrok de manera automatica
+5) Se genera un url para acceder al servidor grafana en la nube
+NOTA: Ngrok es gratuito, por lo tanto la url no es fija. En el caso que se reinicie la raspberry la url cambiara.
+
+--NGROK EMAIL URL--
+1) Se ha habilitado a la cuenta de gmail de mantenimiento de la junta una contraseña de aplicacion
+2) Mediante un script en python se extrae la url variable de ngrok y se la envia por email al correo de la junta
+3) Existe un servicio en systemd que habilita esto de manera automatica
+
+--FALLA DE INTERNET EN EL SERVIDOR--
+1) Mediante un script en python se inserta un valor distintivo (-45) en la base de datos si se pierde la conexion al internet en la raspberry
+2) Existe un servicio en systemd que habilita esto de manera automatica
+NOTA: En este caso la url de ngrok no se ve cambiada al restaurarse la conexion
+
+--DESCONEXION DEL SERVIDOR--
+1) Mediante un script en python se inserta un valor distintivo (-66) en la base de datos si se desconecta-reinicia la raspberry
+2) Existe un servicio en systemd que habilita esto de manera automatica
+
+
 
 
 
