@@ -1,0 +1,15 @@
+[Unit]
+Description=Insertar en MariaDB al iniciar Raspberry
+After=network.target mariadb.service
+
+[Service]
+ExecStart=/home/micha_pi/mqtt_env/bin/python /home/micha_pi/mqtt_env/scripts/insertar_al_inicio.py
+WorkingDirectory=/home/micha_pi/mqtt_env/scripts
+StandardOutput=journal
+StandardError=journal
+Type=oneshot
+User=micha_pi
+Group=micha_pi
+
+[Install]
+WantedBy=multi-user.target
