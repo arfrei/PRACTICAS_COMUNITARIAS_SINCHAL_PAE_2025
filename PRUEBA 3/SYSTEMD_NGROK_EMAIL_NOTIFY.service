@@ -1,0 +1,14 @@
+[Unit]
+Description=Servicio para enviar por correo la URL de ngrok
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/ngrok_email_notify.py
+WorkingDirectory=/home/pi
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
