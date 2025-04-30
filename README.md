@@ -34,4 +34,6 @@ Se añadió el sensor de presión de la junta de agua al Dashboard:
 
 2: Adaptar los códigos del sensor de nivel a un filtro estadístico (IQR+Media)
 
-3: Comunicación LoRa, MySQL y Grafana
+3: Servidor Raspberry Pi (Broker Mosquitto, MariaDB (with Cron Job), Grafana, Ngrok)
+
+Final: Comunicacion LoRa, Servidor Remoto ThingSpeak y Servidor Local Raspberry Pi (Broker Mosquitto, MariaDB (with Cron Job), Grafana) 
