@@ -1,4 +1,4 @@
-En esta integracion final se ha diseñado un servidor en una Raspberry Pi 3 que realiza lo siguiente:
+En esta integracion de prueba se ha diseñado un servidor en una Raspberry Pi 3 que realiza lo siguiente:
 
 --BROKER MQTT MOSQUITTO--
 1) Genera un Broker MQTT en Mosquitto con una ip fija.
