@@ -17,7 +17,7 @@ posibles fugas. La integración de estos sistemas facilitará una toma de decisi
 optimizando el uso del agua y asegurando su disponibilidad continua para la comunidad. 
 
 # SOLUCIONES
-En este repositario iré subiendo ciertos códigos para las distintas soluciones.
+En este repositario iré subiendo los códigos implementados para las distintas soluciones.
 
 1: Comunicación LoRa, ThingSpeak y Comunicación Servidor Flask-SQL Server
 
