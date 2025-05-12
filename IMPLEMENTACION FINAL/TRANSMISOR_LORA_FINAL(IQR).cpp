@@ -30,7 +30,6 @@ static SSD1306Wire display(0x3c, 500000, SDA_OLED, SCL_OLED, GEOMETRY_128_64, RS
 
 // Variables físicas
 int alturaMaxima = 500;
-float RaCisterna = 7.50;
 float valorsinsumergir = 0.60;
 int portValue;
 float nivelVoltios;
