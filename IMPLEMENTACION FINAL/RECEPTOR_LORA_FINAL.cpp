@@ -34,26 +34,26 @@ int16_t rssi, rxSize;
 bool lora_idle = true;
 
 // WiFi
-const char* ssid = "";
-const char* password = "";
+const char* ssid = "JUNTA DE AGUA";
+const char* password = "juntadeagua-2325";
 bool estadoWiFi = false;
 
 // MQTT ThingSpeak
 const char* mqttServer = "mqtt3.thingspeak.com";
 const int mqttPort = 1883;
-const char* mqttClientID = "";
-const char* mqttUsername = "";
-const char* mqttPassword = "";
-const char* mqttTopic = "channels//publish/fields/field1";
+const char* mqttClientID = "Izw7FhYVKBcCIy8BLzkHEyU";
+const char* mqttUsername = "Izw7FhYVKBcCIy8BLzkHEyU";
+const char* mqttPassword = "QA89qevN5z9HjDEsWXFdRx3G";
+const char* mqttTopic = "channels/2941382/publish/fields/field1";
 WiFiClient espClient;
 PubSubClient client(espClient);
 bool estadoMQTT = false;
 
 // MQTT Mosquitto - Raspberry Pi
-const char* mqttServerLocal = "";
+const char* mqttServerLocal = "192.168.1.135";
 const int mqttPortLocal = 1883;
 const char* mqttUserLocal = "miusuario";
-const char* mqttPasswordLocal = "";
+const char* mqttPasswordLocal = "brokerraspsinchal2025";
 const char* mqttTopicLocal = "nivel";
 WiFiClient espClientLocal;
 PubSubClient clientLocal(espClientLocal);
