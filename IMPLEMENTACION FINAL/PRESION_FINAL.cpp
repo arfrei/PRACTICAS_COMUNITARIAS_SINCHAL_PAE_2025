@@ -44,8 +44,6 @@ String valorPendiente = ""; // Para reintento
 
 // -------------------- Sensor y calibración --------------------
 const int sensorPin = 35; // pin valdivia
-const int retardo = 100;
-int lectura;
 
 // Calibración
 const float voltage0 = 0.35;
