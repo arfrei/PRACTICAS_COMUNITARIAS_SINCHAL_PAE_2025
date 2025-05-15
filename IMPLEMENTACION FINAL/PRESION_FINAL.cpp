@@ -89,6 +89,13 @@ void wifi_and_connection_init() {
   Serial.println(" conectado.");
 }
 
+void reconectarWiFi() {
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.println("WiFi desconectado. Intentando reconectar...");
+    wifi_and_connection_init();  // Usa la misma función de conexión inicial
+  }
+}
+
 void conectarMQTT() {
   client.setServer(mqtt_server, mqtt_port);
   int intentos = 0;
@@ -188,6 +195,9 @@ void setup() {
 // -------------------- Loop principal --------------------
 void loop() {
   unsigned long currentMillis = millis();
+
+  // Verificar conexión WiFi y reconectar si se ha perdido
+  reconectarWiFi();
   
   // Verificar conexión MQTT y mantener la conexión activa
   if (!client.connected()) {
