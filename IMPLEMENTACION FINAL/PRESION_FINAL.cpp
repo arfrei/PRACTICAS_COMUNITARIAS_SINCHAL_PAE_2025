@@ -28,6 +28,18 @@ const char* mqttTopic = "channels/2941382/publish/fields/field2";
 WiFiClient espClient;
 PubSubClient client(espClient);
 
+// -------------------- MQTT Mosquitto (local) --------------------
+const char* mqttServerLocal = "192.168.1.135"; // IP de tu broker local
+const int mqttPortLocal = 1883;
+const char* mqttUserLocal = "miusuario";
+const char* mqttPasswordLocal = "";
+const char* mqttTopicLocal = "presion";
+
+WiFiClient espClientLocal;
+PubSubClient clientLocal(espClientLocal);
+
+String valorPendiente = ""; // Para reintento
+
 // -------------------- Sensor y calibración --------------------
 const int sensorPin = 35; // pin valdivia
 const int retardo = 100;
@@ -105,6 +117,27 @@ void conectarMQTT() {
   }
 }
 
+void conectarMQTTLocal() {
+  clientLocal.setServer(mqttServerLocal, mqttPortLocal);
+  int intentos = 0;
+  while (!clientLocal.connected() && intentos < 5) {
+    Serial.print("Conectando a MQTT Local...");
+    if (clientLocal.connect("ESP32Client", mqttUserLocal, mqttPasswordLocal)) {
+      Serial.println(" conectado a Mosquitto.");
+    } else {
+      Serial.print(" fallo, rc=");
+      Serial.print(clientLocal.state());
+      Serial.println(" reintentando en 5 segundos.");
+      intentos++;
+      delay(5000);
+    }
+  }
+
+  if (!clientLocal.connected()) {
+    Serial.println("No se pudo conectar a MQTT Local después de varios intentos.");
+  }
+}
+
 float calculatePressure(float measuredVoltage) {
   float pressure;
   if (measuredVoltage <= voltage0) {
@@ -140,6 +173,8 @@ void setup() {
   // Iniciar conexión MQTT
   Serial.println("Iniciando conexión MQTT...");
   conectarMQTT();
+  
+  conectarMQTTLocal();
 
   // Inicializar array de lecturas
   for (int i = 0; i < numReadings; i++) {
@@ -160,6 +195,21 @@ void loop() {
     conectarMQTT();
   }
   client.loop();  // Este es crucial para mantener la conexión MQTT activa
+  
+  clientLocal.loop(); // Mantener la conexión con Mosquitto
+
+if (!clientLocal.connected()) {
+  Serial.println("Conexión a Mosquitto perdida");
+  conectarMQTTLocal();
+}
+
+// Reintento si había valor pendiente
+if (!valorPendiente.isEmpty() && clientLocal.connected()) {
+  if (clientLocal.publish(mqttTopicLocal, valorPendiente.c_str())) {
+    Serial.println("Reintento exitoso (Mosquitto): " + valorPendiente);
+    valorPendiente = "";
+  }
+}
 
   // Calcular presión en intervalos regulares sin importar si se publica o no
   if (currentMillis - lastSampleTime >= sampleInterval) {
@@ -234,6 +284,20 @@ void loop() {
     if (!publicado) {
       Serial.println("Fallo persistente al publicar MQTT - El LED azul debería estar APAGADO");
       Serial.println("Verifica la conexión a internet y las credenciales de ThingSpeak");
+    }
+
+    // Publicar también en Mosquitto
+    if (clientLocal.connected()) {
+      if (clientLocal.publish(mqttTopicLocal, payload.c_str())) {
+        Serial.println("Publicado en Mosquitto: " + payload);
+        valorPendiente = "";
+      } else {
+        Serial.println("Fallo al publicar en Mosquitto, guardando.");
+        valorPendiente = payload;
+      }
+    } else {
+      Serial.println("Mosquitto desconectado, guardando valor.");
+      valorPendiente = payload;
     }
   }
   
