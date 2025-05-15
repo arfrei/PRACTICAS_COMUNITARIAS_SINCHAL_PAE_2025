@@ -13,7 +13,9 @@ ESP8266WiFiMulti wifiMulti;
 
 // -------------------- Configuración LED Indicador --------------------
 #define LED_PIN 2  // Pin para el LED azul de comunicación (GPIO2 es el LED integrado en muchas placas ESP32)
-#define LED_ON LOW   // Cambia a HIGH si tu LED se
+#define LED_ON LOW   
+
+// -------------------- Configuración Red WiFi --------------------
 #define WIFI_SSID "JUNTA DE AGUA"
 #define WIFI_PASSWORD "juntadeagua-2325"
 
