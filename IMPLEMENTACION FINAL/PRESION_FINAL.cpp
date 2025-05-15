@@ -32,7 +32,7 @@ PubSubClient client(espClient);
 const char* mqttServerLocal = "192.168.1.135"; // IP de tu broker local
 const int mqttPortLocal = 1883;
 const char* mqttUserLocal = "miusuario";
-const char* mqttPasswordLocal = "";
+const char* mqttPasswordLocal = "brokerraspsinchal2025";
 const char* mqttTopicLocal = "presion";
 
 WiFiClient espClientLocal;
