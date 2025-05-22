@@ -3,13 +3,13 @@ Description=Servicio para verificar conexión a Internet y registrar en MariaDB
 After=network.target
 
 [Service]
-ExecStart=/home/micha_pi/mqtt_env/bin/python /home/micha_pi/mqtt_env/scripts/verificar_internet_mariadb.py
+ExecStart=/home/pi/mqtt_env/bin/python /home/pi/mqtt_env/scripts/verificar_internet_mariadb.py
 WorkingDirectory=/home/micha_pi/mqtt_env/scripts
 StandardOutput=journal
 StandardError=journal
 Restart=always
-User=micha_pi
-Group=micha_pi
+User=pi
+Group=pi
 
 [Install]
 WantedBy=multi-user.target
