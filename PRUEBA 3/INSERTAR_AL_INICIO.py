@@ -5,7 +5,7 @@ from datetime import datetime
 db_config = {
     "host": "localhost",
     "user": "root",
-    "password": "tu_contraseña",  #contraseña real
+    "password": "sinchaldatosdb2025",  
     "database": "sensores"
 }
 
