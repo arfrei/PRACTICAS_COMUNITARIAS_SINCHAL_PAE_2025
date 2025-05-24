@@ -431,8 +431,19 @@ void loop() {
       Serial.println("Verifica la conexión a internet y las credenciales de ThingSpeak");
     }
 
+    if (clientLocal.connected()) {
+      if (clientLocal.publish(mqttTopicLocal, payload.c_str())) {
+        Serial.println("Publicado en Mosquitto: " + payload);
+        valorPendiente = "";
+      } else {
+        Serial.println("Fallo al publicar en Mosquitto, guardando.");
+        valorPendiente = payload;
+      }
+    } else {
+      Serial.println("Mosquitto desconectado, guardando valor.");
+      valorPendiente = payload;
+    }
     
   }
-  
   delay(100); // Pequeño delay para no sobrecargar el CPU
 }
