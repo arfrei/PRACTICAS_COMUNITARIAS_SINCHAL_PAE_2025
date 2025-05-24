@@ -30,6 +30,17 @@ const char* mqttTopic = "channels/2941382/publish/fields/field2";
 WiFiClient espClient;
 PubSubClient client(espClient);
 
+// --------------- MQTT Mosquitto (local) ---------------
+const char* mqttServerLocal = "192.168.1.135";
+const int mqttPortLocal = 1883;
+const char* mqttUserLocal = "miusuario";
+const char* mqttPasswordLocal = "brokerraspsinchal2025";
+const char* mqttTopicLocal = "presion";
+
+WiFiClient espClientLocal;
+PubSubClient clientLocal(espClientLocal);
+String valorPendiente = "";
+
 // -------------------- Variables para gestión WiFi mejorada --------------------
 unsigned long lastWiFiCheck = 0;
 const unsigned long wifiCheckInterval = 10000; // Verificar WiFi cada 10 segundos
@@ -240,6 +251,19 @@ void conectarMQTT() {
   }
 }
 
+void conectarMQTTLocal() {
+  clientLocal.setServer(mqttServerLocal, mqttPortLocal);
+  int intentos = 0;
+  while (!clientLocal.connected() && intentos < 5) {
+    if (clientLocal.connect("ESP32Client", mqttUserLocal, mqttPasswordLocal)) {
+      Serial.println("Conectado a Mosquitto local");
+    } else {
+      intentos++;
+      delay(5000);
+    }
+  }
+}
+
 float calculatePressure(float measuredVoltage) {
   float pressure;
   if (measuredVoltage <= voltage0) {
@@ -288,6 +312,8 @@ void setup() {
   Serial.println("Iniciando conexión MQTT...");
   conectarMQTT();
 
+  conectarMQTTLocal();
+
   // Inicializar array de lecturas
   for (int i = 0; i < numReadings; i++) {
     readings[i] = 0;
@@ -315,6 +341,15 @@ void loop() {
       conectarMQTT();
     }
     client.loop();  // Este es crucial para mantener la conexión MQTT activa
+
+    if (!clientLocal.connected()) conectarMQTTLocal();
+    clientLocal.loop();
+
+    if (!valorPendiente.isEmpty() && clientLocal.connected()) {
+      if (clientLocal.publish(mqttTopicLocal, valorPendiente.c_str())) {
+      valorPendiente = "";
+      }
+    }
   } else {
     Serial.println("WiFi no conectado, saltando operaciones MQTT...");
   }
@@ -362,14 +397,15 @@ void loop() {
     currentPressure = newPressure;
   }
 
-  // Publicar a ThingSpeak cada minuto, pero solo si el sistema está estabilizado y WiFi conectado
+  // Publicar a ThingSpeak y Mosquitto cada minuto, pero solo si el sistema está estabilizado y WiFi conectado
   if (systemStabilized && (WiFi.status() == WL_CONNECTED) && (currentMillis - lastPublishTime >= publishInterval)) {
     lastPublishTime = currentMillis;
     
     // Verificar nuevamente la conexión antes de publicar
-    if (!client.connected()) {
+    if (!client.connected() || !clientLocal.connected()) {
       Serial.println("Reconectando a MQTT antes de publicar...");
       conectarMQTT();
+      conectarMQTTLocal();
     }
     
     // Enviar a ThingSpeak (field2)
@@ -394,6 +430,8 @@ void loop() {
       Serial.println("Fallo persistente al publicar MQTT - El LED azul debería estar APAGADO");
       Serial.println("Verifica la conexión a internet y las credenciales de ThingSpeak");
     }
+
+    
   }
   
   delay(100); // Pequeño delay para no sobrecargar el CPU
